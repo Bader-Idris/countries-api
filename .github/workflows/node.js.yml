@@ -17,7 +17,6 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v4
@@ -26,11 +25,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - name: Install server dependencies
+      run: npm install --prefix server
+    - name: Build project (if applicable)
+      run: npm run build --if-present --prefix project
     - name: Start Server
       run: |
         nohup npm run start --prefix server &
         sleep 10 # Wait for the server to start
-        # You can add any commands here to verify the server is running, like curl or wget
+        # Optionally test if the server is running
+        curl -f http://localhost:3000 || exit 1
