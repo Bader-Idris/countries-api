@@ -1,0 +1,11 @@
+@mixin dark-mode() {
+  background-color: $dark-blue-el;
+  color: $White;
+  transition: all 0.3s ease;
+  box-shadow: 0px 5px 10px 5px $very-dark-blue-bg;
+}
+@mixin dark-mode-body() {
+  background-color: $very-dark-blue-bg;
+  color: $White;
+  transition: all 0.3s ease;
+}

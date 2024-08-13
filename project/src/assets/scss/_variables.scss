@@ -1,0 +1,27 @@
+$main-border-radius: 5px;
+
+// ? ================== Neutral Colors ==================
+
+$dark-blue-el: hsl(209, 23%, 22%); // Dark Mode Elements
+$very-dark-blue-bg: hsl(207, 26%, 17%); // Dark Mode Background
+$very-dark-blue-text: hsl(200, 15%, 8%); // Light Mode Text
+$dark-gray: hsl(0, 0%, 52%); // Light Mode Input
+$very-light-gray: hsl(0, 0%, 98%); // Light Mode Background
+$White: hsl(0, 0%, 100%); // Dark Mode Text & Light Mode Elements
+
+// ? ================== Typography ==================
+
+// Body Copy
+$homepage-items: 14px;
+$detail-page: 16px;
+
+// ? ================== fonts ==================
+
+$main-font: "Nunito Sans";
+// Weights: 300, 600, 800
+
+// ? ================== Icons ==================
+// resources, but I prefer figma direct pasting svgs
+// https://fontawesome.com/
+// https://icomoon.io/
+// https://ionic.io/ionicons
