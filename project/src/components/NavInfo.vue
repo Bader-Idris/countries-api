@@ -37,7 +37,6 @@
 }
 </style>
 
-
 <script setup lang="ts">
 import { ref, defineEmits } from "vue";
 import MoonIcon from "./icons/MoonSharp.vue";
