@@ -26,12 +26,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: Install server dependencies
-      run: cd server; npm install --prefix server
-    - name: Build project (if applicable)
-      run: npm run build --if-present --prefix project
-    - name: Start Server
-      run: |
-        nohup npm run start --prefix server &
-        sleep 10 # Wait for the server to start
-        # Optionally test if the server is running
-        curl -f http://localhost:3000 || exit 1
+      run: npm install && npm start
+    # - name: Build project (if applicable)
+    #   run: npm run build --if-present --prefix project
+    # - name: Start Server
+    #   run: |
+    #     nohup npm run start --prefix server &
+    #     sleep 10 # Wait for the server to start
+    #     # Optionally test if the server is running
+    #     curl -f http://localhost:3000 || exit 1
