@@ -46,6 +46,9 @@ function toggleTheme() {
     color: $White;
     opacity: 0.7;
   }
+  &.dark-mode a {
+    color: $White;
+  }
 }
 .main-container {
   height: 100vh;

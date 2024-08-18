@@ -2,11 +2,8 @@
   <nav>
     <div class="searching">
       <SearchIcon :fill="isToggled ? 'white' : 'black'" />
-      <input
-        type="search"
-        v-model="searchQuery"
-        placeholder="Search for a country"
-      />
+      <input type="search" v-model="searchQuery"
+        placeholder="Search for a country" />
     </div>
     <select v-model="selectedRegion" name="filter-by-region">
       <option value="" :hidden="true">Filter By Region</option>
@@ -17,12 +14,8 @@
     </select>
   </nav>
   <div class="countries">
-    <div
-      v-for="country in filteredCountries"
-      :key="country.name"
-      class="country"
-      @click="goToCountry(country.name)"
-    >
+    <div v-for="country in filteredCountries" :key="country.name"
+      class="country" @click="goToCountry(country.name)">
       <div class="country-flag">
         <!-- <LazyImage :src="country.flag" :alt="`Flag of ${country.name}`" /> -->
         <img :src="country.flag" :alt="`Flag of ${country.name}`" />
@@ -39,12 +32,13 @@
 
 <script setup lang="ts">
 import localData from "@/assets/data.json";
-import { ref, computed, defineProps } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 // import LazyImage from './LazyImage.vue' // Import the LazyImage component
 const isToggled = ref(false);
 
 import SearchIcon from "@/components/icons/Search.vue";
+
 const countries = ref(
   localData.map((country) => ({
     name: country.name,
@@ -60,6 +54,23 @@ const countries = ref(
 const selectedRegion = ref("");
 const searchQuery = ref("");
 
+// Create a reactive array to store the fetched countries
+const fetchedCountries = ref([]);
+
+// Function to fetch countries in batches
+const fetchCountries = (batchSize: number, initialFetch = false) => {
+  if (fetchedCountries.value.length >= countries.value.length) return;
+
+  const start = initialFetch ? 0 : fetchedCountries.value.length;
+  const end = Math.min(start + batchSize, countries.value.length);
+
+  fetchedCountries.value.push(...countries.value.slice(start, end));
+
+  if (end < countries.value.length) {
+    setTimeout(() => fetchCountries(30), 2000); // Fetch 30 more countries every 2 seconds
+  }
+};
+
 // Create a computed property for unique regions
 const uniqueRegions = computed(() => {
   return [...new Set(countries.value.map((country) => country.region))].sort();
@@ -67,7 +78,7 @@ const uniqueRegions = computed(() => {
 
 // Create a computed property for filtered countries
 const filteredCountries = computed(() => {
-  return countries.value.filter((country) => {
+  return fetchedCountries.value.filter((country) => {
     const matchesRegion = selectedRegion.value
       ? country.region === selectedRegion.value
       : true;
@@ -85,6 +96,11 @@ const router = useRouter();
 const goToCountry = (name: string) => {
   router.push({ name: "countryName", params: { name } });
 };
+
+// Fetch the initial 15 countries on component mount
+onMounted(() => {
+  fetchCountries(15, true);
+});
 
 // const emit = defineEmits<{
 //   (e: 'toggle'): void

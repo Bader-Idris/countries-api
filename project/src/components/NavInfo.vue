@@ -1,6 +1,8 @@
 <template>
   <div class="nav-info">
-    <p>Where in the World?</p>
+    <a href="/">
+      <p>Where in the World?</p>
+    </a>
     <div class="toggle-theme" @click="handleClick">
       <MoonIcon :fill="isToggled ? 'white' : 'black'" />
       <span> {{ isDarkMode }}</span>
@@ -17,9 +19,13 @@
   align-items: center;
   background-color: $White;
   box-shadow: 0px 5px 10px 5px $dark-gray;
-  p {
-    font-size: 24px;
-    font-weight: 800;
+  a {
+    text-decoration: none;
+    color: #000;
+    p {
+        font-size: 24px;
+        font-weight: 800;
+      }
   }
 
   .toggle-theme {

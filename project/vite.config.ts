@@ -8,6 +8,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  // base: "./repo-name", // for GitHub Pages
   plugins: [vue(), vueDevTools()],
   css: {
     preprocessorOptions: {
@@ -18,11 +19,21 @@ export default defineConfig({
     postcss: {
       plugins: [
         autoprefixer({
-          browsers: ['defaults', 'last 2 versions', 'Edge >= 12', 'Firefox >= 20'],
+          browsers: [
+            "defaults",
+            "last 2 versions",
+            "Edge >= 12",
+            "Firefox >= 20"
+          ],
 
-          overrideBrowserslist: ['defaults', 'last 2 versions', 'Edge >= 12', 'Firefox >= 20'],
-          grid: 'stable',
-          flexbox: 'modern',
+          overrideBrowserslist: [
+            "defaults",
+            "last 2 versions",
+            "Edge >= 12",
+            "Firefox >= 20"
+          ],
+          grid: "stable",
+          flexbox: "modern",
           cascade: false
         })
       ]
@@ -30,7 +41,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      "@": fileURLToPath(new URL("./src", import.meta.url))
     }
   }
-})
+});
