@@ -94,7 +94,7 @@ const filteredCountries = computed(() => {
 const router = useRouter();
 
 const goToCountry = (name: string) => {
-  router.push({ name: "countryName", params: { name } });
+  router.push({ name: "countryName", params: { name: encodeURIComponent(name) } });
 };
 
 // Fetch the initial 15 countries on component mount

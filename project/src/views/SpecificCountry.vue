@@ -163,13 +163,21 @@ import localData from "@/assets/data.json";
 
 const route = useRoute();
 const router = useRouter();
-const countryName = ref(route.params.name as string);
+const countryName = ref(decodeURIComponent(route.params.name as string));
 const country = ref(null);
 
 const fetchCountryData = () => {
+  if (!countryName.value) {
+    console.error("Country name is not provided.");
+    country.value = null;
+    return;
+  }
   const foundCountry = localData.find(
     (c) => c.name.toLowerCase() === countryName.value.toLowerCase()
   );
+  if (!foundCountry) {
+    console.error(`Country "${countryName.value}" not found in data.`);
+  }
   country.value = foundCountry || null;
 };
 
@@ -180,7 +188,7 @@ onMounted(fetchCountryData);
 watch(
   () => route.params.name,
   (newName) => {
-    countryName.value = newName as string;
+    countryName.value = decodeURIComponent(newName as string);
     fetchCountryData();
   }
 );
@@ -189,7 +197,7 @@ watch(
 const goToCountry = (alphaName: string) => {
   const toPushTo = localData.find((c) => c.alpha3Code === alphaName)?.name;
   if (toPushTo) {
-    router.push({ name: "countryName", params: { name: toPushTo } });
+    router.push({ name: "countryName", params: { name: encodeURIComponent(toPushTo) } });
   }
 };
 </script>
